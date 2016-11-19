@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+class ShopModel:NSObject{
+    var baseInfoShop:BaseInfoShop?
+}
+
+class BaseInfoShop:NSObject{
+    var nameShop:String?
+    var bussinessType:String?
+}

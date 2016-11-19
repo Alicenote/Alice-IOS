@@ -7,3 +7,8 @@
 //
 
 import Foundation
+class Constant {
+    static let isSignUp = "IsSignUp"
+    static let token = "Token"
+    static let id = "ID"
+}

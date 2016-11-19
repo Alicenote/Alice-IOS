@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+class SizeHelper{
+    static func heightAsHeightScreen(value: CGFloat) -> CGFloat {
+        let valueHeight = value/1170*(UIScreen.main.fixedCoordinateSpace.bounds.height - 20)
+        return valueHeight
+    }
+    
+    static func widthAsWidthScreen(value: CGFloat) -> CGFloat {
+        let valueWidth = value/700*(UIScreen.main.fixedCoordinateSpace.bounds.width)
+        return valueWidth
+    }
+}

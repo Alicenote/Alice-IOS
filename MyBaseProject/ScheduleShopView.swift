@@ -41,7 +41,7 @@ class ScheduleShopView:UIView {
         let titles = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
         var itemScheduleShopView:ItemScheduleShopView?
         for index:Int in 0...6 {
-            itemScheduleShopView = ItemScheduleShopView(frame: CGRect(x: 0, y: SizeHelper.heightAsHeightScreen(value: 140) + CGFloat(index)*SizeHelper.heightAsHeightScreen(value: 120), width: frame.width, height: SizeHelper.heightAsHeightScreen(value: 120)))
+            itemScheduleShopView = ItemScheduleShopView(frame: CGRect(x: 0, y: SizeHelper.heightAsHeightScreen(value: CGFloat(index*120 + 140)), width: frame.width, height: SizeHelper.heightAsHeightScreen(value: 120)))
             itemScheduleShopView!.itemScheduleShop = ItemScheduleShop(isChecked: false, title: titles[index], listBeginTime: [ValueContextMenu](), listEndTime: [ValueContextMenu]())
             background.addSubview(itemScheduleShopView!)
         }
@@ -54,23 +54,25 @@ class ScheduleShopView:UIView {
         background.addSubview(line)
         
         let buttonBack:UIButton = {
-            let b = UIButton(frame: CGRect(x: SizeHelper.widthAsWidthScreen(value: 50), y: SizeHelper.heightAsHeightScreen(value: 140) + CGFloat(7)*SizeHelper.heightAsHeightScreen(value: 120) + 2 + SizeHelper.heightAsHeightScreen(value: 35), width: SizeHelper.widthAsWidthScreen(value: 200), height: SizeHelper.heightAsHeightScreen(value: 90)))
+            let b = UIButton(frame: CGRect(x: SizeHelper.widthAsWidthScreen(value: 50), y: SizeHelper.heightAsHeightScreen(value: 1015) + 2, width: SizeHelper.widthAsWidthScreen(value: 200), height: SizeHelper.heightAsHeightScreen(value: 90)))
             b.layer.borderWidth = 1
             b.layer.borderColor = UIColor.black.cgColor
             b.setTitle("BACK", for: UIControlState.normal)
             b.setTitleColor(UIColor.black, for: UIControlState.normal)
             b.addTarget(self, action: #selector(ScheduleShopView.backClicked), for: UIControlEvents.touchUpInside)
+            b.backgroundColor = UIColor.rgbFromHexExtension(rgbValue: 0xcccccc, alpha: 1)
             return b
         }()
         background.addSubview(buttonBack)
         
         let buttonNext:UIButton = {
-            let b = UIButton(frame: CGRect(x: SizeHelper.widthAsWidthScreen(value: 450), y: SizeHelper.heightAsHeightScreen(value: 140) + CGFloat(7)*SizeHelper.heightAsHeightScreen(value: 120) + 2 + SizeHelper.heightAsHeightScreen(value: 35), width: SizeHelper.widthAsWidthScreen(value: 200), height: SizeHelper.heightAsHeightScreen(value: 90)))
+            let b = UIButton(frame: CGRect(x: SizeHelper.widthAsWidthScreen(value: 450), y: SizeHelper.heightAsHeightScreen(value: 1015) + 2, width: SizeHelper.widthAsWidthScreen(value: 200), height: SizeHelper.heightAsHeightScreen(value: 90)))
             b.layer.borderWidth = 1
             b.layer.borderColor = UIColor.black.cgColor
             b.setTitle("NEXT", for: UIControlState.normal)
             b.setTitleColor(UIColor.black, for: UIControlState.normal)
             b.addTarget(self, action: #selector(ScheduleShopView.nextClicked), for: UIControlEvents.touchUpInside)
+            b.backgroundColor = UIColor.rgbFromHexExtension(rgbValue: 0xcccccc, alpha: 1)
             return b
         }()
         background.addSubview(buttonNext)
