@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 class SignUpHelper:NSObject {
     static let sharedInstance = SignUpHelper()
     typealias Result = (_ isError:Bool, _ message:String, _ token:String, _ id:String) -> Void
@@ -108,11 +109,84 @@ class SignUpHelper:NSObject {
         })
     }
     
-    func registerShop(shopModel: ShopModel){
+    func registerShop(shopModel: ShopModel,result :@escaping Result){
         
+        let urlString = "http://api.alicenote.com/v1/welcomes/set-setup?salon_id=89"
+        
+        let baseInfoShop = shopModel.baseInfoShop
+        let baseScheduleShop = shopModel.baseScheduleShop
+        let baseServiceShop = shopModel.baseServiceShop
+        
+        let parameter : Parameters = [
+            "info"  = [
+                "business_name" : baseInfoShop?.nameShop,
+                "business_type" : baseInfoShop?.bussinessType,
+                "state_id" : baseInfoShop?.stateId,
+                "city" : baseInfoShop?.city,
+                "postcode" : baseInfoShop?.postcode ,
+                "address" : baseInfoShop?.address
+            ],
+            "schedule"  = [[
+                "day" : baseScheduleShop.day ,
+                "nameday" : baseScheduleShop.nameday ,
+                "openhour" : baseScheduleShop.openHour ,
+                "closehour" : baseScheduleShop.closeHour ,
+                "status" : baseScheduleShop.status
+            ]],
+            "service" = [[
+                "group" = [
+                    "id" : baseServiceShop?.baseGroupOfServiceShop?.id,
+                    "name" : baseServiceShop?.baseGroupOfServiceShop?.name
+                ],
+                "services" = [[
+                    "name" : baseServiceShop?.baseServicesOfServiceShop?.name,
+                    "check" : baseServiceShop?.baseServicesOfServiceShop?.check,
+                    "price" : baseServiceShop?.baseServicesOfServiceShop?.price,
+                    "duaration" : baseServiceShop?.baseServicesOfServiceShop?.duaration,
+                    "work" : baseServiceShop?.baseGroupOfServiceShop?.work
+                ]]
+            ]]
+        ]
+    
+
+        
+        var request = URLRequest(url: urlString)
+        request.httpMethod = "POST"
+        request.httpBody = parameter
+        
+        let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, error -> Void in
+            
+            var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
+           
+            var err: NSError?
+            var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
+            
+            guard  err == nil else {
+                result(true,"Please check your connection!","","")
+            }
+            
+            if let parseJSON = json {
+                
+                var status = parseJSON["status"] as? Int
+                if (status == 1) {
+                    result(false,"","","")
+                } else {
+                    result(true,"Please check your connection!","","")
+                }
+                
+                println("Succes: \(status)")
+            }
+            else {
+                result(true,"Please check your connection!","","")
+            }
+            
+        })
+        task.resume()
+    
     }
     
     func getRegisterShopForm(shopId: String){
         
     }
+
 }

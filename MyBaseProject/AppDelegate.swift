@@ -19,8 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
         if !UserDefaults.standard.bool(forKey: Constant.isSignUp) {
-            //window!.rootViewController = SignUpController()
-            window!.rootViewController = HomeController()
+            window!.rootViewController = SignUpController()
+            //window!.rootViewController = HomeController()
         } else {
             window!.rootViewController = HomeController()
         }

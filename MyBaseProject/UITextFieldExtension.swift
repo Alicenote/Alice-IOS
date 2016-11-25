@@ -13,13 +13,14 @@ class MyUITextField : UITextField, UITextFieldDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.delegate = self
+        self.returnKeyType = UIReturnKeyType.done
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func textFieldShouldReturn(userText: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.resignFirstResponder()
         return true;
     }

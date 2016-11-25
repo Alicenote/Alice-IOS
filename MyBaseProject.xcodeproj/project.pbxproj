@@ -488,6 +488,7 @@
 				TargetAttributes = {
 					891162871DD63DB300FBBABA = {
 						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = FAZH6E59JU;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -744,7 +745,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = "~/Documents/MyProject/Swift3.0/Alicenote/MyBaseProject/SDK";
+				DEVELOPMENT_TEAM = FAZH6E59JU;
+				FRAMEWORK_SEARCH_PATHS = "~/Documents/Projects/Alice-IOS/SDK";
 				INFOPLIST_FILE = MyBaseProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -765,7 +767,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = "~/Documents/MyProject/Swift3.0/Alicenote/MyBaseProject/SDK";
+				DEVELOPMENT_TEAM = FAZH6E59JU;
+				FRAMEWORK_SEARCH_PATHS = "~/Documents/Projects/Alice-IOS/SDK";
 				INFOPLIST_FILE = MyBaseProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
