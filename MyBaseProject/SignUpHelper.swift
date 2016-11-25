@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import Alamofire
 
 class SignUpHelper:NSObject {
     static let sharedInstance = SignUpHelper()
@@ -117,8 +117,32 @@ class SignUpHelper:NSObject {
         let baseScheduleShop = shopModel.baseScheduleShop
         let baseServiceShop = shopModel.baseServiceShop
         
+        let scheduleParameter = [[
+            "day" : baseScheduleShop?.day ,
+            "nameday" : baseScheduleShop?.nameDay ,
+            "openhour" : baseScheduleShop?.openHour ,
+            "closehour" : baseScheduleShop?.closeHour ,
+            "status" : baseScheduleShop?.status
+        ]]
+        
+        let servicesOfService = [[
+            "name" : baseServiceShop?.baseServicesOfServiceShop?.name,
+            "check" : baseServiceShop?.baseServicesOfServiceShop?.check,
+            "price" : baseServiceShop?.baseServicesOfServiceShop?.price as Any,
+            "duaration" : baseServiceShop?.baseServicesOfServiceShop?.duaration as Any,
+            "work" : baseServiceShop?.baseServicesOfServiceShop?.work as Any
+        ]]
+        
+        let service = [[
+            "group" : [
+                "id" : baseServiceShop?.baseGroupOfServiceShop?.id,
+                "name" : baseServiceShop?.baseGroupOfServiceShop?.name
+            ],
+            "services" :  servicesOfService
+        ]]
+        
         let parameter : Parameters = [
-            "info"  = [
+            "info" :  [
                 "business_name" : baseInfoShop?.nameShop,
                 "business_type" : baseInfoShop?.bussinessType,
                 "state_id" : baseInfoShop?.stateId,
@@ -126,63 +150,23 @@ class SignUpHelper:NSObject {
                 "postcode" : baseInfoShop?.postcode ,
                 "address" : baseInfoShop?.address
             ],
-            "schedule"  = [[
-                "day" : baseScheduleShop.day ,
-                "nameday" : baseScheduleShop.nameday ,
-                "openhour" : baseScheduleShop.openHour ,
-                "closehour" : baseScheduleShop.closeHour ,
-                "status" : baseScheduleShop.status
-            ]],
-            "service" = [[
-                "group" = [
-                    "id" : baseServiceShop?.baseGroupOfServiceShop?.id,
-                    "name" : baseServiceShop?.baseGroupOfServiceShop?.name
-                ],
-                "services" = [[
-                    "name" : baseServiceShop?.baseServicesOfServiceShop?.name,
-                    "check" : baseServiceShop?.baseServicesOfServiceShop?.check,
-                    "price" : baseServiceShop?.baseServicesOfServiceShop?.price,
-                    "duaration" : baseServiceShop?.baseServicesOfServiceShop?.duaration,
-                    "work" : baseServiceShop?.baseGroupOfServiceShop?.work
-                ]]
-            ]]
+            "schedule" :  scheduleParameter,
+            "service" : service
         ]
-    
+        
+        let request = Alamofire.request(urlString, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: nil)
+        request.responseJSON { response in
+            if let error = response.result.error  {
+                result(true,"Please check your connection!","","")
+            }
+            if let json = response.result.value {
+                result(false,"","","")
+            } else {
+                result(true,"Please check your connection!","","")
+            }
+            
+        }
 
-        
-        var request = URLRequest(url: urlString)
-        request.httpMethod = "POST"
-        request.httpBody = parameter
-        
-        let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, error -> Void in
-            
-            var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-           
-            var err: NSError?
-            var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
-            
-            guard  err == nil else {
-                result(true,"Please check your connection!","","")
-            }
-            
-            if let parseJSON = json {
-                
-                var status = parseJSON["status"] as? Int
-                if (status == 1) {
-                    result(false,"","","")
-                } else {
-                    result(true,"Please check your connection!","","")
-                }
-                
-                println("Succes: \(status)")
-            }
-            else {
-                result(true,"Please check your connection!","","")
-            }
-            
-        })
-        task.resume()
-    
     }
     
     func getRegisterShopForm(shopId: String){

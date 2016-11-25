@@ -7,5 +7,3 @@
 #import <FBSDKCoreKit/FBSDKButton.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <GoogleSignIn/GoogleSignIn.h>
-
-#import "Alamofire.h"
